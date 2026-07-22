@@ -4,7 +4,6 @@ const Product = require("../models/product.model");
 const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
 
-// GET CART
 exports.getCart = asyncHandler(async (req, res) => {
   let cart = await Cart.findOne().populate(
     "items.product",
@@ -25,7 +24,6 @@ exports.getCart = asyncHandler(async (req, res) => {
   });
 });
 
-// ADD ITEM
 exports.addItemToCart = asyncHandler(async (req, res, next) => {
   const { product: productId, quantity } = req.body;
 
@@ -33,6 +31,10 @@ exports.addItemToCart = asyncHandler(async (req, res, next) => {
 
   if (!product) {
     return next(new AppError("Product not found", 404));
+  }
+
+  if (product.stock <= 0) {
+    return next(new AppError("Product is out of stock", 400));
   }
 
   if (quantity > product.stock) {
@@ -80,7 +82,6 @@ exports.addItemToCart = asyncHandler(async (req, res, next) => {
   });
 });
 
-// UPDATE ITEM
 exports.updateCartItem = asyncHandler(async (req, res, next) => {
   const { quantity } = req.body;
 
@@ -126,7 +127,6 @@ exports.updateCartItem = asyncHandler(async (req, res, next) => {
   });
 });
 
-// REMOVE ITEM
 exports.removeCartItem = asyncHandler(async (req, res, next) => {
   const cart = await Cart.findOne();
 
@@ -152,7 +152,6 @@ exports.removeCartItem = asyncHandler(async (req, res, next) => {
   });
 });
 
-// CLEAR CART
 exports.clearCart = asyncHandler(async (req, res) => {
   let cart = await Cart.findOne();
 

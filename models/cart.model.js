@@ -21,7 +21,12 @@ const cartItemSchema = new mongoose.Schema({
 
 const cartSchema = new mongoose.Schema(
   {
+    sessionId: {
+      type: String,
+    },
+
     items: [cartItemSchema],
+
     totalPrice: {
       type: Number,
       default: 0,
