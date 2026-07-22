@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const mongoose = require("mongoose");
-const connectDB = require("./config/connectDB");
+const connectDB = require("./db/connectDB");
 
 const Category = require("./models/category.model");
 const Product = require("./models/product.model");
@@ -11,12 +11,10 @@ const seedDB = async () => {
   try {
     await connectDB();
 
-    // Delete old data
     await Order.deleteMany({});
     await Product.deleteMany({});
     await Category.deleteMany({});
 
-    // Create categories
     const categories = await Category.insertMany([
       {
         name: "Electronics",
@@ -35,7 +33,6 @@ const seedDB = async () => {
       },
     ]);
 
-    // Create products
     const products = await Product.insertMany([
       {
         name: "Laptop",
@@ -44,7 +41,6 @@ const seedDB = async () => {
         stock: 10,
         category: categories[0]._id,
         images: ["laptop.jpg"],
-        inStock: true,
       },
       {
         name: "Phone",
@@ -53,7 +49,6 @@ const seedDB = async () => {
         stock: 15,
         category: categories[0]._id,
         images: ["phone.jpg"],
-        inStock: true,
       },
       {
         name: "T-Shirt",
@@ -62,7 +57,6 @@ const seedDB = async () => {
         stock: 20,
         category: categories[1]._id,
         images: ["tshirt.jpg"],
-        inStock: true,
       },
       {
         name: "Jeans",
@@ -71,7 +65,6 @@ const seedDB = async () => {
         stock: 12,
         category: categories[1]._id,
         images: ["jeans.jpg"],
-        inStock: true,
       },
       {
         name: "Football",
@@ -80,7 +73,6 @@ const seedDB = async () => {
         stock: 8,
         category: categories[2]._id,
         images: ["football.jpg"],
-        inStock: true,
       },
       {
         name: "Tennis Racket",
@@ -89,7 +81,6 @@ const seedDB = async () => {
         stock: 5,
         category: categories[2]._id,
         images: ["racket.jpg"],
-        inStock: true,
       },
     ]);
 
