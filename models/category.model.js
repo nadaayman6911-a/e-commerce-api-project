@@ -10,6 +10,7 @@ const categorySchema = new mongoose.Schema(
     },
     description: {
       type: String,
+      trim: true,
     },
     slug: {
       type: String,
@@ -19,5 +20,10 @@ const categorySchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+categorySchema.pre("save", function (next) {
+  this.slug = this.name.toLowerCase().replace(/\s+/g, "-");
+  next();
+});
 
 module.exports = mongoose.model("Category", categorySchema);

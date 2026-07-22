@@ -2,8 +2,6 @@ const Category = require("../models/category.model");
 const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
 
-
-// GET ALL
 exports.getCategories = asyncHandler(async (req, res) => {
 
   const categories = await Category.find();
@@ -16,8 +14,6 @@ exports.getCategories = asyncHandler(async (req, res) => {
 
 });
 
-
-// GET ONE
 exports.getCategory = asyncHandler(async (req, res, next) => {
 
   const category = await Category.findById(req.params.id);
@@ -35,7 +31,6 @@ exports.getCategory = asyncHandler(async (req, res, next) => {
 });
 
 
-// CREATE
 exports.createCategory = asyncHandler(async (req, res) => {
 
   const category = await Category.create(req.body);
@@ -49,7 +44,6 @@ exports.createCategory = asyncHandler(async (req, res) => {
 });
 
 
-// UPDATE
 exports.updateCategory = asyncHandler(async (req, res, next) => {
 
   const category = await Category.findByIdAndUpdate(
@@ -75,7 +69,6 @@ exports.updateCategory = asyncHandler(async (req, res, next) => {
 });
 
 
-// DELETE
 exports.deleteCategory = asyncHandler(async (req, res, next) => {
 
   const category = await Category.findByIdAndDelete(req.params.id);
