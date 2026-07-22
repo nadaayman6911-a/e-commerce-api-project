@@ -11,19 +11,15 @@ const {
 const router = express.Router();
 
 
-// Checkout
 router.post("/", createOrder);
 
 
-// Get all orders
 router.get("/", getOrders);
 
 
-// Get single order
 router.get("/:id", getOrder);
 
 
-// Update order status
 router.patch("/:id/status", updateOrderStatus);
 
 
