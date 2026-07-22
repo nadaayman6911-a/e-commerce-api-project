@@ -9,7 +9,7 @@ const errorHandler = (err, req, res, next) => {
   // Mongoose Validation Error
   if (err.name === "ValidationError") {
     error.statusCode = 400;
-    error.message = Object.values(err.errors)
+    error.message = Object.values(err.esrrors)
       .map((e) => e.message)
       .join(", ");
   }
