@@ -34,9 +34,10 @@ exports.getProducts = asyncHandler(async (req, res) => {
   }
 
   if (inStock !== undefined) {
-    filter.inStock = inStock === "true";
+    filter.stock = inStock === "true"
+      ? { $gt: 0 }
+      : { $lte: 0 };
   }
-
   if (search) {
     filter.$or = [
       { name: { $regex: search, $options: "i" } },

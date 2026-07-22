@@ -5,9 +5,12 @@ const productSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, "Product name is required"],
+      trim: true,
     },
     description: {
       type: String,
+      required: [true, "Product description is required"],
+      trim: true,
     },
     price: {
       type: Number,
@@ -26,15 +29,18 @@ const productSchema = new mongoose.Schema(
     },
     images: {
       type: [String],
-    },
-    inStock: {
-      type: Boolean,
-      default: true,
+      default: [],
     },
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+
+productSchema.virtual("inStock").get(function () {
+  return this.stock > 0;
+});
 
 module.exports = mongoose.model("Product", productSchema);
