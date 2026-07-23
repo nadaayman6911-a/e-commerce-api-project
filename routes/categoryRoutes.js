@@ -8,6 +8,9 @@ const {
   deleteCategory
 } = require("../controllers/categoryController");
 
+const { body } = require("express-validator");
+const validate = require("../middleware/validate");
+
 
 const router = express.Router();
 
@@ -16,7 +19,16 @@ router.get("/", getCategories);
 
 router.get("/:id", getCategory);
 
-router.post("/", createCategory);
+router.post(
+  "/",
+  [
+    body("name")
+      .notEmpty()
+      .withMessage("Category name is required"),
+  ],
+  validate,
+  createCategory
+);
 
 router.patch("/:id", updateCategory);
 
